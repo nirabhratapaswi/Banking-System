@@ -1,0 +1,114 @@
+databaseChangeLog:
+  - preConditions:
+    - runningAs:
+        username: csminor
+
+  - changeSet:
+      id: 1
+      author: nirabhratapaswi
+      changes:
+        - createTable:
+            tableName: customer
+            columns:
+              - column:
+                  name: customer_id
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(255)
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: street
+                  type: varchar(255)
+              - column:
+                  name: city
+                  type: varchar(255)
+
+  - changeSet:
+      id: 2
+      author: nirabhratapaswi
+      changes:
+        - createTable:
+            tableName: loan
+            columns:
+              - column:
+                  name: loan_number
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: amount
+                  type: bigint
+              - column:
+                  name: customer_id
+                  type: bigserial
+                  constraints:
+                    nullable: false
+                    
+  - changeSet:
+      id: 3
+      author: nirabhratapaswi
+      changes:
+      - addForeignKeyConstraint:
+          baseColumnNames: customer_id
+          baseTableName: loan
+          constraintName: fk_customerid_loan
+          deferrable: true
+          initiallyDeferred: true
+          onDelete: CASCADE
+          onUpdate: RESTRICT
+          referencedColumnNames: customer_id
+          referencedTableName: customer
+
+  - changeSet:
+      id: 4
+      author: nirabhratapaswi
+      changes:
+      - addColumn:
+#          catalogName: banking
+          columns:
+          - column:
+              name: password
+              type: varchar(255)
+              defaultValue: "chemical"
+              constraints:
+                nullable: false
+          schemaName: public
+          tableName: customer
+      
+  - changeSet:
+      id: 5
+      author: nirabhratapaswi
+      comment: "Inserting Initial Data"
+      changes:
+        - insert :
+            tableName: customer
+            columns:
+              - column:
+                  name: customer_id
+                  value: 102115029
+              - column:
+                  name: username
+                  value: "nirabhratapaswi"
+              - column:
+                  name: name
+                  value: "Nirabhra Tapaswi"
+              - column:
+                  name: password
+                  value: "chemical"
+              - column:
+                  name: street
+                  value: "Behala"
+              - column:
+                  name: city
+                  value: "Kolkata"
