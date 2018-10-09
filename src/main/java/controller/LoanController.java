@@ -16,7 +16,6 @@ import java.util.Optional;
 
 import models.Customer;
 import models.Loan;
-import models.LoanExtended;
 import service.LoanService;
 import service.CustomerService;
 

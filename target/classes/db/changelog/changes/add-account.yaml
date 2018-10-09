@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - changeSet:
+      id: 6
+      author: nirabhratapaswi
+      changes:
+        - createTable:
+            tableName: account
+            columns:
+              - column:
+                  name: accountnumber
+                  type: bigserial
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: balance
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: branchname
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: customerid
+                  type: bigserial
+                  constraints:
+                    nullable: false
+              - column:
+                  name: isa
+                  type: varchar(20)
+                  constraints:
+                     nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: customerid
+            baseTableName: account
+            constraintName: fk_customerid_account
+            deferrable: true
+            initiallyDeferred: true
+            onDelete: NO ACTION
+            onUpdate: RESTRICT
+            referencedColumnNames: customerid
+            referencedTableName: customer
+      

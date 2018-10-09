@@ -1,0 +1,54 @@
+databaseChangeLog:
+  - changeSet:
+      id: 6
+      author: nirabhratapaswi
+      changes:
+        - createTable:
+            tableName: branch
+            columns:
+              - column:
+                  name: branchname
+                  type: varchar(255)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: branchcity
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: assets
+                  type: bigint
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: branchname
+            baseTableName: account
+            constraintName: fk_branchname_account
+            deferrable: true
+            initiallyDeferred: true
+            onDelete: NO ACTION
+            onUpdate: RESTRICT
+            referencedColumnNames: branchname
+            referencedTableName: branch
+        - addColumn:
+            schemaName: public
+            tableName: loan
+            columns:
+              - column:
+                  name: branchname
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: branchname
+            baseTableName: loan
+            constraintName: fk_loannumber_branch
+            deferrable: true
+            initiallyDeferred: true
+            onDelete: NO ACTION
+            onUpdate: RESTRICT
+            referencedColumnNames: branchname
+            referencedTableName: branch
+      

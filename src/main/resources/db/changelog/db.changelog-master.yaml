@@ -11,7 +11,7 @@ databaseChangeLog:
             tableName: customer
             columns:
               - column:
-                  name: customer_id
+                  name: customerid
                   type: bigserial
                   autoIncrement: true
                   constraints:
@@ -40,8 +40,8 @@ databaseChangeLog:
             tableName: loan
             columns:
               - column:
-                  name: loan_number
-                  type: bigint
+                  name: loannumber
+                  type: bigserial
                   autoIncrement: true
                   constraints:
                     primaryKey: true
@@ -50,7 +50,7 @@ databaseChangeLog:
                   name: amount
                   type: bigint
               - column:
-                  name: customer_id
+                  name: customerid
                   type: bigserial
                   constraints:
                     nullable: false
@@ -60,14 +60,14 @@ databaseChangeLog:
       author: nirabhratapaswi
       changes:
       - addForeignKeyConstraint:
-          baseColumnNames: customer_id
+          baseColumnNames: customerid
           baseTableName: loan
           constraintName: fk_customerid_loan
           deferrable: true
           initiallyDeferred: true
           onDelete: CASCADE
           onUpdate: RESTRICT
-          referencedColumnNames: customer_id
+          referencedColumnNames: customerid
           referencedTableName: customer
 
   - changeSet:
@@ -75,7 +75,6 @@ databaseChangeLog:
       author: nirabhratapaswi
       changes:
       - addColumn:
-#          catalogName: banking
           columns:
           - column:
               name: password
@@ -95,7 +94,7 @@ databaseChangeLog:
             tableName: customer
             columns:
               - column:
-                  name: customer_id
+                  name: customerid
                   value: 102115029
               - column:
                   name: username
@@ -112,3 +111,12 @@ databaseChangeLog:
               - column:
                   name: city
                   value: "Kolkata"
+                  
+  - include:
+      file: classpath:/db/changelog/changes/add-account.yaml
+      
+  - include:
+      file: classpath:/db/changelog/changes/add-branch.yaml
+      
+  - include:
+      file: classpath:/db/changelog/changes/add-payment.yaml

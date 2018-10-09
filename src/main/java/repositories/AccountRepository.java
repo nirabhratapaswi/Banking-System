@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import models.Customer;
+import models.Account;
 
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer, Long>{
-	Customer findByUsername(String username);
+public interface AccountRepository extends JpaRepository<Account, Long> {
+	Account findByAccountnumber(Long account_number);
 }

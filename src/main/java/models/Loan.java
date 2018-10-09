@@ -2,6 +2,7 @@ package models;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Column;
@@ -15,18 +16,48 @@ import javax.validation.constraints.NotNull;
 @Data
 @Entity
 @Table(name="Loan")
-public class Loan {
+public class Loan implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2307852772530972175L;
+
 	@Id
-	@Column(name="loan_number")
+	@Column(name="loannumber")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long loan_number;
+	private long loannumber;
 	
 	@NotNull
+	@Column(name="amount")
 	protected long amount;
 	
 	@ManyToOne
-	@JoinColumn(name="customer_id")
+	@JoinColumn(name="customerid")
 	private Customer customer;
+	
+	@ManyToOne
+	@JoinColumn(name="branchname")
+	private Branch branch;
+
+	public long getLoannumber() {
+		return loannumber;
+	}
+
+	public void setLoannumber(long loannumber) {
+		this.loannumber = loannumber;
+	}
+
+	public Branch getBranch() {
+		return branch;
+	}
+
+	public void setBranch(Branch branch) {
+		this.branch = branch;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	public long getAmount() {
 		return amount;
@@ -45,6 +76,6 @@ public class Loan {
 	}
 	
 	public String toCustomString() {
-		return "Loan number: " + ((Long) this.loan_number).toString() + ", amount: " + ((Long) this.amount).toString();
+		return "Loan number: " + ((Long) this.loannumber).toString() + ", amount: " + ((Long) this.amount).toString();
 	}
 }

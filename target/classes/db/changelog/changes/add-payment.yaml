@@ -1,0 +1,39 @@
+databaseChangeLog:
+  - changeSet:
+      id: 7
+      author: nirabhratapaswi
+      changes:
+        - createTable:
+            tableName: payment
+            columns:
+              - column:
+                  name: paymentnumber
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: paymentamount
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: paymentdate
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: loannumber
+                  type: bigserial
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: loannumber
+            baseTableName: payment
+            constraintName: fk_loannumber_payment
+            deferrable: true
+            initiallyDeferred: true
+            onDelete: NO ACTION
+            onUpdate: RESTRICT
+            referencedColumnNames: loannumber
+            referencedTableName: loan

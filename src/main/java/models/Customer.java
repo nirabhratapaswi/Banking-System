@@ -2,6 +2,7 @@ package models;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Column;
@@ -11,40 +12,67 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.beans.factory.annotation.Autowired;
 
 @Data
 @Entity
 @Table(name="customer")
-public class Customer {
+@JsonIgnoreProperties(
+		value = {"password"},
+		allowGetters = true
+)
+public class Customer implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6758563944993544313L;
+
 	@Id
-	@Column(name = "customer_id")
+	@Column(name = "customerid")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long customer_id;
+	private long customerid;
+	
+	@NotNull
+	@Column(name = "username")
+	private String username;
+	
+	@NotNull
+	@Column(name = "name")
+	private String name;
+	
+	@NotNull
+	@JsonIgnore
+	@Column(name = "password")
+	private String password;
+	
+	@NotNull
+	@Column(name = "street")
+	private String street;
+	
+	@NotNull
+	@Column(name = "city")
+	private String city;
 	
 	/*private BCryptPasswordEncoder passwordEncoder;
 	
 	protected User() {
 		this.passwordEncoder = new BCryptPasswordEncoder();
 	}*/
-	
-	@NotNull
-	private String username;
-	
-	@NotNull
-	private String name;
-	
-	@NotNull
-	@JsonIgnore
-	private String password;
-	
-	@NotNull
-	private String street;
-	
-	@NotNull
-	private String city;
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public long getCustomerid() {
+		return customerid;
+	}
+
+	public void setCustomerid(long customerid) {
+		this.customerid = customerid;
+	}
+	
 	public String getStreet() {
 		return street;
 	}
@@ -87,6 +115,6 @@ public class Customer {
 	}
 	
 	public String toCustomString() {
-		return "Customer id: " + ((Long) this.customer_id).toString() + ", username: " + this.username + ", name: " + this.name;
+		return "Customer id: " + ((Long) this.customerid).toString() + ", username: " + this.username + ", name: " + this.name;
 	}
 }
