@@ -1,11 +1,10 @@
 # Banking-System
 
-Task-Scheduler is a lightweight application built to auto-schedule your daily/weekly/monthly/yearly routine with the motto of "Time Management? -> piece of cake".
+Banking-System is a java application to showcase the functionality of a Bank, with professional database designs and rich APIs.
 
-  - built with **django** and **mysql**
+  - built with **Java Spring-Boot** and **Postgre SQL**
   - no external dependencies
   - **Api** extensions available
-  - **CLI** for terminal lovers:)
 
 ### Installation
 
