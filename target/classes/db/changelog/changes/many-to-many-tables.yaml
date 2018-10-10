@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: 9
+      author: nirabhratapaswi
+      changes:
+        - createTable:
+            tableName: customer_account
+            columns:
+              - column:
+                  name: customerid
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: accountnumber
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: customerid
+            baseTableName: customer_account
+            constraintName: fk_customerid_customer_account
+            deferrable: true
+            initiallyDeferred: true
+            onDelete: CASCADE
+            onUpdate: RESTRICT
+            referencedColumnNames: customerid
+            referencedTableName: customer
+        - addForeignKeyConstraint:
+            baseColumnNames: accountnumber
+            baseTableName: customer_account
+            constraintName: fk_accountnumber_customer_account
+            deferrable: true
+            initiallyDeferred: true
+            onDelete: CASCADE
+            onUpdate: RESTRICT
+            referencedColumnNames: accountnumber
+            referencedTableName: account

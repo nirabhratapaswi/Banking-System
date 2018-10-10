@@ -3,6 +3,9 @@ package models;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Column;
@@ -10,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
@@ -53,9 +57,13 @@ public class Account implements Serializable {
 	@JoinColumn(name="branchname")
 	private Branch branch;
 	
-	@ManyToOne
+	/*@ManyToOne
 	@JoinColumn(name="customerid")
-	private Customer customer;
+	private Customer customer;*/
+	
+	@JsonIgnore
+	@ManyToMany(mappedBy = "accounts")
+	public Set<Customer> customers;
 
 	public long getAccountnumber() {
 		return accountnumber;
@@ -81,18 +89,28 @@ public class Account implements Serializable {
 		this.branch = branch;
 	}
 
-	public Customer getCustomer() {
+	/*public Customer getCustomer() {
 		return customer;
 	}
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
-	}
+	}*/
+	
+	
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 	
+	public Set<Customer> getCustomers() {
+		return customers;
+	}
+
+	public void setCustomers(Set<Customer> customers) {
+		this.customers = customers;
+	}
+
 	public String toCustomString() {
 		return "Account number: " + ((Long) this.accountnumber).toString() + ", balance: " + ((Long) this.balance).toString() + ", isa: " + this.isa;
 	}

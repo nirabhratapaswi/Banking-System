@@ -3,12 +3,19 @@ package models;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -55,11 +62,24 @@ public class Customer implements Serializable {
 	@Column(name = "city")
 	private String city;
 	
+	@JsonIgnore
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name="customer_account", joinColumns = {@JoinColumn(name = "customerid", referencedColumnName = "customerid")}, inverseJoinColumns = {@JoinColumn(name = "accountnumber", referencedColumnName = "accountnumber")})
+	private Set<Account> accounts;
+	
 	/*private BCryptPasswordEncoder passwordEncoder;
 	
 	protected User() {
 		this.passwordEncoder = new BCryptPasswordEncoder();
 	}*/
+
+	public Set<Account> getAccounts() {
+		return accounts;
+	}
+
+	public void setAccounts(Set<Account> accounts) {
+		this.accounts = accounts;
+	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;

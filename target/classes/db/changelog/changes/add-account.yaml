@@ -23,24 +23,24 @@ databaseChangeLog:
                   type: varchar(255)
                   constraints:
                     nullable: false
-              - column:
-                  name: customerid
-                  type: bigserial
-                  constraints:
-                    nullable: false
+#              - column:
+#                  name: customerid
+#                  type: bigserial
+#                  constraints:
+#                    nullable: false
               - column:
                   name: isa
                   type: varchar(20)
                   constraints:
                      nullable: false
-        - addForeignKeyConstraint:
-            baseColumnNames: customerid
-            baseTableName: account
-            constraintName: fk_customerid_account
-            deferrable: true
-            initiallyDeferred: true
-            onDelete: NO ACTION
-            onUpdate: RESTRICT
-            referencedColumnNames: customerid
-            referencedTableName: customer
+#        - addForeignKeyConstraint:
+#            baseColumnNames: customerid
+#            baseTableName: account
+#            constraintName: fk_customerid_account
+#            deferrable: true
+#            initiallyDeferred: true
+#            onDelete: NO ACTION
+#            onUpdate: RESTRICT
+#            referencedColumnNames: customerid
+#            referencedTableName: customer
       

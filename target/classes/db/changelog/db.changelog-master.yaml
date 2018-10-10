@@ -120,3 +120,9 @@ databaseChangeLog:
       
   - include:
       file: classpath:/db/changelog/changes/add-payment.yaml
+
+  - include:
+      file: classpath:/db/changelog/changes/add-index-to-customer.yaml
+      
+  - include:
+      file: classpath:/db/changelog/changes/many-to-many-tables.yaml
