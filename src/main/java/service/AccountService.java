@@ -31,4 +31,14 @@ public class AccountService {
 		accountRepository.save(account);
 		return true;
 	}
+	
+	public Boolean deleteAccount(long accountnumber) {
+		try {
+			this.accountRepository.deleteById(accountnumber);
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+		return true;
+	}
 }

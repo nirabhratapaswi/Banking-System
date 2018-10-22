@@ -31,4 +31,14 @@ public class PaymentService {
 		paymentRepository.save(payment);
 		return true;
 	}
+	
+	public Boolean deletePayment(long paymentnumber) {
+		try {
+			this.paymentRepository.deleteById(paymentnumber);
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+		return true;
+	}
 }

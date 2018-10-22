@@ -6,6 +6,7 @@ public class AccountPost {
 	private long balance;
 	private String isa;
 	private String branchname;
+	public Integer customerid;
 	
 	public String getIsa() {
 		return isa;
@@ -14,7 +15,6 @@ public class AccountPost {
 	public void setIsa(String isa) {
 		this.isa = isa;
 	}
-	public List<Customer> customers;
 
 	public long getBalance() {
 		return balance;
@@ -32,16 +32,16 @@ public class AccountPost {
 		this.branchname = branchname;
 	}
 
-	public List<Customer> getCustomers() {
-		return customers;
+	public Integer getCustomerid() {
+		return customerid;
 	}
 
-	public void setCustomers(List<Customer> customers) {
-		this.customers = customers;
+	public void setCustomerid(Integer customerid) {
+		this.customerid = customerid;
 	}
 
 	public String toCustomString() {
-		return "Balance: " + ((Long) this.balance).toString() + ", isa: " + this.isa + ", branchname: " + this.branchname;
+		return "Balance: " + ((Long) this.balance).toString() + ", isa: " + this.isa + ", branchname: " + this.branchname + ", customerid: " + this.customerid;
 	}
 	
 }

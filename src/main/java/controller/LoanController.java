@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +37,17 @@ public class LoanController {
 		return this.loanService.getAllLoans();
 	}
 	
+	@RequestMapping(value = "/get/{loannumber}")
+	@GetMapping
+	public @ResponseBody Loan getLoan(@PathVariable("loannumber") Long loannumber) {
+		Optional<Loan> loan = this.loanService.getLoan(loannumber);
+		if (loan.isPresent()) {
+			return loan.get();
+		} else {
+			return null;
+		}
+	}
+	
 	@RequestMapping(value = "/update/new", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	@PostMapping
 	public @ResponseBody Boolean addNewLoan(Loan loan) {
@@ -55,4 +67,11 @@ public class LoanController {
 		System.out.println("Trying to save loan: " + loan.toCustomString());
 		return this.loanService.saveLoan(loan);
 	}
+	
+	@RequestMapping(value = "/delete/{loannumber}")
+	@GetMapping
+	public @ResponseBody Boolean deleteLoan(@PathVariable("loannumber") Long loannumber) {
+		return this.loanService.deleteLoan(loannumber);
+	}
+	
 }

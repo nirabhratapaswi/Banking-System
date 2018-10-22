@@ -10,6 +10,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,14 +45,20 @@ public class AccountController {
 	@RequestMapping(value = "/list/all")
 	@GetMapping
 	public List<Account> getAllAccounts() {
-		for (Account a: this.accountService.getAllAccounts()) {
+		/*for (Account a: this.accountService.getAllAccounts()) {
 			System.out.println("Account: " + a.getAccountnumber() + " belongs to the customers: ");
 			for (Customer c: a.getCustomers()) {
 				System.out.print(c.getName() + ",");
 			}
 			System.out.println("");
-		}
+		}*/
 		return this.accountService.getAllAccounts();
+	}
+	
+	@RequestMapping(value = "/get/{accountnumber}")
+	@GetMapping
+	public @ResponseBody Account getAccount(@PathVariable("accountnumber") Long accountnumber) {
+		return this.accountService.getAccountByAccountNumber(accountnumber);
 	}
 	
 	@RequestMapping(value = "/update/new", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -62,7 +69,7 @@ public class AccountController {
 		account.setBalance(accountPost.getBalance());
 		account.setIsa(accountPost.getIsa());
 		Set<Customer> customeridSet = new HashSet<>();
-		Optional<Customer> customerOptional = customerService.getCustomer(((Integer) 102115029).longValue());
+		Optional<Customer> customerOptional = customerService.getCustomer(((Integer) accountPost.customerid).longValue());
 		if (customerOptional.isPresent()) {
 			Customer customer = customerOptional.get();
 			System.out.println("Adding customer: " + customer.getName());
@@ -82,5 +89,11 @@ public class AccountController {
 		account.setCustomers(customeridSet);
 		account.setBranch(branch);
 		return this.accountService.saveAccount(account);
+	}
+	
+	@RequestMapping(value = "/delete/{accountnumber}")
+	@GetMapping
+	public @ResponseBody Boolean deleteAccount(@PathVariable("accountnumber") Long accountnumber) {
+		return this.accountService.deleteAccount(accountnumber);
 	}
 }

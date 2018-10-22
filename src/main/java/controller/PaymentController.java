@@ -1,10 +1,12 @@
 package controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.MediaType;
 
+import models.Loan;
 import models.Payment;
 import service.PaymentService;
 
@@ -31,10 +34,28 @@ public class PaymentController {
 		return this.paymentService.getAllPayments();
 	}
 	
+	@RequestMapping(value = "/get/{paymentnumber}")
+	@GetMapping
+	public @ResponseBody Payment getPayment(@PathVariable("paymentnumber") Long paymentnumber) {
+		Optional<Payment> payment = this.paymentService.getPayment(paymentnumber);
+		if (payment.isPresent()) {
+			return payment.get();
+		} else {
+			return null;
+		}
+	}
+	
 	@RequestMapping(value = "/update/new", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	@PostMapping
 	public @ResponseBody Boolean addNewBranch(Payment payment) {
 		System.out.println("Trying to save payment: " + payment.toCustomString());
 		return this.paymentService.savePayment(payment);
 	}
+	
+	@RequestMapping(value = "/delete/{paymentnumber}")
+	@GetMapping
+	public @ResponseBody Boolean deletePayment(@PathVariable("paymentnumber") Long paymentnumber) {
+		return this.paymentService.deletePayment(paymentnumber);
+	}
+	
 }

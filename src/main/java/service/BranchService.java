@@ -31,4 +31,14 @@ public class BranchService {
 		branchRepository.save(branch);
 		return true;
 	}
+	
+	public Boolean deleteBranch(String branchname) {
+		try {
+			this.branchRepository.deleteById(branchname);
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+		return true;
+	}
 }
