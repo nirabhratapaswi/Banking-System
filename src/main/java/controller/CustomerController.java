@@ -68,6 +68,30 @@ public class CustomerController {
 		}
 	}
 	
+	@RequestMapping(value = "/getwithaccounts/{customerid}")
+	@GetMapping
+	public @ResponseBody CustomerPost getCustomerWithAccounts(@PathVariable("customerid") Long customerid) {
+		Optional<Customer> customer = this.customerService.getCustomerByCustomerid(customerid);
+		if (customer.isPresent()) {
+			Customer cust = customer.get();
+			CustomerPost custPost = new CustomerPost();
+			custPost.setCity(cust.getCity());
+			custPost.setName(cust.getName());
+			custPost.setUsername(cust.getUsername());
+			custPost.setStreet(cust.getStreet());
+			custPost.setAccounts(cust.getAccounts());
+			
+			if (cust.getAccounts() != null) {
+				for (Account a: cust.getAccounts()) {
+					System.out.println(a.toCustomString());
+				}
+			}
+			return custPost;
+		} else {
+			return null;
+		}
+	}
+	
 	/*@RequestMapping(value = "/update/new", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	@PostMapping
 	public @ResponseBody Boolean addNewCustomer(Customer customer) {
@@ -80,7 +104,6 @@ public class CustomerController {
 	public @ResponseBody Boolean addNewCustomer(CustomerPost customerPost) {
 		System.out.println("Trying to save customer: " + customerPost.toCustomString());
 		Customer customer = new Customer();
-		customer.setUsername(customerPost.getUsername());
 		customer.setName(customerPost.getName());
 		customer.setUsername(customerPost.getUsername());
 		customer.setPassword(customerPost.getPassword());
@@ -97,6 +120,25 @@ public class CustomerController {
 			}
 		}
 		customer.setAccounts(accountSet);
+		return this.customerService.saveCustomer(customer);
+	}
+	
+	@RequestMapping(value = "/update/existing", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	@PostMapping
+	public @ResponseBody Boolean updateCustomer(CustomerPost customerPost) {
+		System.out.println("Trying to save customer: " + customerPost.toCustomString());
+		Optional<Customer> customerOptional = this.customerService.getCustomerByCustomerid(customerPost.getCustomerid());
+		Customer customer;
+		if (customerOptional.isPresent()) {
+			customer = customerOptional.get();
+		} else {
+			return null;
+		}
+		customer.setName(customerPost.getName());
+		customer.setUsername(customerPost.getUsername());
+		customer.setPassword(customerPost.getPassword());
+		customer.setStreet(customerPost.getStreet());
+		customer.setCity(customerPost.getCity());
 		return this.customerService.saveCustomer(customer);
 	}
 	

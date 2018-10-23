@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 9
+      id: 12
       author: nirabhratapaswi
       changes:
       - createIndex:

@@ -3,6 +3,15 @@ package models;
 import java.util.Set;
 
 public class CustomerPost {
+	public Long getCustomerid() {
+		return customerid;
+	}
+
+	public void setCustomerid(Long customerid) {
+		this.customerid = customerid;
+	}
+
+	private Long customerid;
 	private String username;
 	private String name;
 	

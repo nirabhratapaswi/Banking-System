@@ -1,15 +1,15 @@
 databaseChangeLog:
   - changeSet:
-      id: 12
+      id: 9
       author: nirabhratapaswi
       changes:
       - createIndex:
           catalogName: public
           columns:
           - column:
-              name: username
-              type: varchar(255)
-          indexName: idx_username
+              name: accountnumber
+              type: bigserial
+          indexName: idx_accountnumber
           schemaName: public
-          tableName: customer
+          tableName: account
           unique: true

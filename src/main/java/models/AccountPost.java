@@ -3,6 +3,15 @@ package models;
 import java.util.List;
 
 public class AccountPost {
+	private long accountnumber;
+	public long getAccountnumber() {
+		return accountnumber;
+	}
+
+	public void setAccountnumber(long accountnumber) {
+		this.accountnumber = accountnumber;
+	}
+
 	private long balance;
 	private String isa;
 	private String branchname;
@@ -41,7 +50,7 @@ public class AccountPost {
 	}
 
 	public String toCustomString() {
-		return "Balance: " + ((Long) this.balance).toString() + ", isa: " + this.isa + ", branchname: " + this.branchname + ", customerid: " + this.customerid;
+		return "Accountnumber: " + ((Long) this.accountnumber).toString() + ", balance: " + ((Long) this.balance).toString() + ", isa: " + this.isa + ", branchname: " + this.branchname + ", customerid: " + this.customerid;
 	}
 	
 }

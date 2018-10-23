@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +83,11 @@ public class AccountController {
         
 	}
 	
+	public Integer newAccountnumber() {
+		Random rnd = new Random();
+		return 100000 + rnd.nextInt(10000000);
+	}
+	
 	@RequestMapping(value = "/list/all")
 	@GetMapping
 	public List<Account> getAllAccounts() {
@@ -100,10 +106,12 @@ public class AccountController {
 	@GetMapping
 	public @ResponseBody Account getAccount(@PathVariable("accountnumber") Long accountnumber) {
 		Account account = this.accountService.getAccountByAccountNumber(accountnumber);
-		if (account.getCustomers() != null) {
+		if (account != null && account.getCustomers() != null) {
 			for (Customer c: account.getCustomers()) {
 				System.out.println(c.toCustomString());
 			}
+		} else {
+			return null;
 		}
 		return account;
 	}
@@ -114,9 +122,15 @@ public class AccountController {
 		System.out.println("Trying to save account: " + accountPost.toCustomString());
 		Account account = new Account();
 		Customer customer;
+		Random rnd = new Random();
+		int n = 100000 + rnd.nextInt(900000);
+		Integer new_account_number = this.newAccountnumber();
+		while (this.accountRepository.findByAccountnumber((long) new_account_number) != null) {
+			new_account_number = this.newAccountnumber();
+		}
+		account.setAccountnumber(new_account_number);
 		account.setBalance(accountPost.getBalance());
 		account.setIsa(accountPost.getIsa());
-		Set<Customer> customeridSet = new HashSet<>();
 		Optional<Customer> customerOptional = customerService.getCustomer(((Integer) accountPost.customerid).longValue());
 		// Optional<Customer> customerOptional = customerService.getCustomer(((Integer) 102115029).longValue());
 		if (customerOptional.isPresent()) {
@@ -140,10 +154,51 @@ public class AccountController {
 		return this.customerService.saveCustomer(customer);
 	}
 	
-	@RequestMapping(value = "/delete/{accountnumber}")
+	@RequestMapping(value = "/update/existing", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	@PostMapping
+	public @ResponseBody Boolean updateAccount(AccountPost accountPost) {
+		System.out.println("Trying to save account: " + accountPost.toCustomString());
+		Account account = this.accountService.getAccountByAccountNumber(accountPost.getAccountnumber());
+		if (account == null) {
+			return false;
+		}
+		Customer customer;
+		account.setBalance(accountPost.getBalance());
+		account.setIsa(accountPost.getIsa());
+		Optional<Customer> customerOptional = customerService.getCustomer(((Integer) accountPost.customerid).longValue());
+		if (customerOptional.isPresent()) {
+			customer = customerOptional.get();
+			System.out.println("Adding customer: " + customer.getName());
+			Boolean exists = false;
+			for (Customer c: account.getCustomers()) {
+				if (c.getCustomerid() == accountPost.getCustomerid()) {
+					exists = true;
+				}
+			}
+			if (!exists) {
+				account.getCustomers().add(customer);
+			}
+		} else {
+			return false;
+		}
+		Optional<Branch> branchOptional = branchService.getBranch(accountPost.getBranchname());
+		Branch branch;
+		if (branchOptional.isPresent()) {
+			branch = branchOptional.get();
+			System.out.println("Adding branch: " + branch.toCustomString());
+		} else {
+			return false;
+		}
+		account.setBranch(branch);
+		this.accountService.saveAccount(account);
+		customer.getAccounts().add(account);
+		return this.customerService.saveCustomer(customer);
+	}
+	
+	@RequestMapping(value = "/delete/{accountid}")
 	@GetMapping
-	public @ResponseBody Boolean deleteAccount(@PathVariable("accountnumber") Long accountnumber) {
-		return this.accountService.deleteAccount(accountnumber);
+	public @ResponseBody Boolean deleteAccount(@PathVariable("accountid") Long accountid) {
+		return this.accountService.deleteAccount(accountid);
 	}
 	
 }
