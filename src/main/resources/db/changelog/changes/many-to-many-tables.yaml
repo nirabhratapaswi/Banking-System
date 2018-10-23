@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 9
+      id: 11
       author: nirabhratapaswi
       changes:
         - createTable:
@@ -13,7 +13,7 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: accountnumber
+                  name: accountid
                   type: bigserial
                   constraints:
                     primaryKey: true
@@ -29,12 +29,12 @@ databaseChangeLog:
             referencedColumnNames: customerid
             referencedTableName: customer
         - addForeignKeyConstraint:
-            baseColumnNames: accountnumber
+            baseColumnNames: accountid
             baseTableName: customer_account
-            constraintName: fk_accountnumber_customer_account
+            constraintName: fk_accountid_customer_account
             deferrable: true
             initiallyDeferred: true
             onDelete: CASCADE
             onUpdate: RESTRICT
-            referencedColumnNames: accountnumber
+            referencedColumnNames: accountid
             referencedTableName: account

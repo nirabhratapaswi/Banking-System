@@ -3,6 +3,7 @@ package models;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -63,9 +64,10 @@ public class Customer implements Serializable {
 	private String city;
 	
 	@JsonIgnore
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name="customer_account", joinColumns = {@JoinColumn(name = "customerid", referencedColumnName = "customerid")}, inverseJoinColumns = {@JoinColumn(name = "accountnumber", referencedColumnName = "accountnumber")})
-	private Set<Account> accounts;
+	// @ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany()
+	@JoinTable(name="customer_account", joinColumns = {@JoinColumn(name = "customerid", referencedColumnName = "customerid")}, inverseJoinColumns = {@JoinColumn(name = "accountid", referencedColumnName = "accountid")})
+	private Set<Account> accounts = new HashSet<>();
 	
 	/*private BCryptPasswordEncoder passwordEncoder;
 	

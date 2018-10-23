@@ -2,6 +2,7 @@ package csminor.chemical;
 
 import java.util.Arrays;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -13,7 +14,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import liquibase.integration.spring.SpringLiquibase;
-
+import models.*;
+import repositories.*;
 import controller.CustomerController;
 
 @SpringBootApplication
@@ -24,8 +26,9 @@ import controller.CustomerController;
 @EnableJpaRepositories("repositories")
 public class App 
 {
+
 	public static void main(String[] args) {
-        SpringApplication.run(App.class, args);
+		SpringApplication.run(App.class, args);
     }
 	
 	@Bean
@@ -43,4 +46,5 @@ public class App
 
         };*/
     }
+	
 }

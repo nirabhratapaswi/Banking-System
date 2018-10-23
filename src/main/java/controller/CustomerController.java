@@ -56,7 +56,13 @@ public class CustomerController {
 	public @ResponseBody Customer getCustomer(@PathVariable("customerid") Long customerid) {
 		Optional<Customer> customer = this.customerService.getCustomerByCustomerid(customerid);
 		if (customer.isPresent()) {
-			return customer.get();
+			Customer cust = customer.get();
+			if (cust.getAccounts() != null) {
+				for (Account a: cust.getAccounts()) {
+					System.out.println(a.toCustomString());
+				}
+			}
+			return cust;
 		} else {
 			return null;
 		}

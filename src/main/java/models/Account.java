@@ -3,6 +3,7 @@ package models;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -33,10 +34,22 @@ public class Account implements Serializable {
 	private static final long serialVersionUID = 6204005124799397466L;
 	
 	@Id
-	@Column(name = "accountnumber")
+	@Column(name = "accountid")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long accountid;
+	
+	@NotNull
+	@Column(name = "accountnumber")
 	private long accountnumber;
 	
+	public long getAccountid() {
+		return accountid;
+	}
+
+	public void setAccountid(long id) {
+		this.accountid = id;
+	}
+
 	@NotNull
 	@Column(name = "balance")
 	private long balance;
@@ -61,9 +74,9 @@ public class Account implements Serializable {
 	@JoinColumn(name="customerid")
 	private Customer customer;*/
 	
-	@JsonIgnore
+//	@JsonIgnore
 	@ManyToMany(mappedBy = "accounts")
-	public Set<Customer> customers;
+	private Set<Customer> customers = new HashSet<>();
 
 	public long getAccountnumber() {
 		return accountnumber;

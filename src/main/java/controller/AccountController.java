@@ -23,6 +23,9 @@ import models.Account;
 import models.AccountPost;
 import models.Branch;
 import models.Customer;
+import repositories.AccountRepository;
+import repositories.BranchRepository;
+import repositories.CustomerRepository;
 import service.AccountService;
 import service.BranchService;
 import service.CustomerService;
@@ -40,7 +43,44 @@ public class AccountController {
 	@Autowired
 	private BranchService branchService;
 	
+	@Autowired
+	private AccountRepository accountRepository;
+	
+	@Autowired
+	private CustomerRepository customerRepository;
+	
+	@Autowired
+	private BranchRepository branchRepository;
+	
 	protected AccountController() {}
+	
+	public void testManyToMany() {
+		this.accountRepository.deleteAll();
+		this.customerRepository.deleteAll();;
+		
+		Account account = new Account();
+		account.setAccountnumber(100001);
+		account.setBalance(250000);
+		account.setIsa("savings");
+		account.setBranch(this.branchRepository.findByBranchname("NIT Trichy"));
+		
+		Customer customer = new Customer();
+		customer.setName("Anirudh Swaminathan");
+		customer.setCity("Chennai");
+		customer.setStreet("Tamil Nadu");
+		customer.setPassword("helloworld");
+		customer.setUsername("aniswami97");
+		
+		account.getCustomers().add(customer);
+		
+		System.out.println("Saving customer and his account(for aniswami97)!!!");
+		this.accountRepository.save(account);
+		
+		System.out.println(this.accountRepository.findByAccountnumber((long) 100001));
+		customer.getAccounts().add(this.accountRepository.findAll().get(0));
+		this.customerRepository.save(customer);
+        
+	}
 	
 	@RequestMapping(value = "/list/all")
 	@GetMapping
@@ -52,13 +92,20 @@ public class AccountController {
 			}
 			System.out.println("");
 		}*/
+//		testManyToMany();
 		return this.accountService.getAllAccounts();
 	}
 	
 	@RequestMapping(value = "/get/{accountnumber}")
 	@GetMapping
 	public @ResponseBody Account getAccount(@PathVariable("accountnumber") Long accountnumber) {
-		return this.accountService.getAccountByAccountNumber(accountnumber);
+		Account account = this.accountService.getAccountByAccountNumber(accountnumber);
+		if (account.getCustomers() != null) {
+			for (Customer c: account.getCustomers()) {
+				System.out.println(c.toCustomString());
+			}
+		}
+		return account;
 	}
 	
 	@RequestMapping(value = "/update/new", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -66,17 +113,17 @@ public class AccountController {
 	public @ResponseBody Boolean addNewAccount(AccountPost accountPost) {
 		System.out.println("Trying to save account: " + accountPost.toCustomString());
 		Account account = new Account();
+		Customer customer;
 		account.setBalance(accountPost.getBalance());
 		account.setIsa(accountPost.getIsa());
 		Set<Customer> customeridSet = new HashSet<>();
 		Optional<Customer> customerOptional = customerService.getCustomer(((Integer) accountPost.customerid).longValue());
+		// Optional<Customer> customerOptional = customerService.getCustomer(((Integer) 102115029).longValue());
 		if (customerOptional.isPresent()) {
-			Customer customer = customerOptional.get();
+			customer = customerOptional.get();
 			System.out.println("Adding customer: " + customer.getName());
-			customeridSet.add(customer);
-			for (Customer c: customeridSet) {
-				System.out.println("Flag 0: " + c.getName());
-			}
+		} else {
+			return false;
 		}
 		Optional<Branch> branchOptional = branchService.getBranch(accountPost.getBranchname());
 		Branch branch;
@@ -86,9 +133,11 @@ public class AccountController {
 		} else {
 			return false;
 		}
-		account.setCustomers(customeridSet);
+		account.getCustomers().add(customer);
 		account.setBranch(branch);
-		return this.accountService.saveAccount(account);
+		this.accountService.saveAccount(account);
+		customer.getAccounts().add(account);
+		return this.customerService.saveCustomer(customer);
 	}
 	
 	@RequestMapping(value = "/delete/{accountnumber}")
@@ -96,4 +145,5 @@ public class AccountController {
 	public @ResponseBody Boolean deleteAccount(@PathVariable("accountnumber") Long accountnumber) {
 		return this.accountService.deleteAccount(accountnumber);
 	}
+	
 }

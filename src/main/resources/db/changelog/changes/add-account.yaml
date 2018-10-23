@@ -7,11 +7,16 @@ databaseChangeLog:
             tableName: account
             columns:
               - column:
-                  name: accountnumber
+                  name: accountid
                   type: bigserial
                   autoIncrement: true
                   constraints:
                     primaryKey: true
+                    nullable: false
+              - column:
+                  name: accountnumber
+                  type: bigserial
+                  constraints:
                     nullable: false
               - column:
                   name: balance
@@ -43,4 +48,14 @@ databaseChangeLog:
 #            onUpdate: RESTRICT
 #            referencedColumnNames: customerid
 #            referencedTableName: customer
+
+  - changeSet:
+      id: 7
+      author: nirabhratapaswi
+      changes:
+      - addUniqueConstraint:
+          columnNames: accountnumber
+          constraintName: const_accountnumbe
+          schemaName: public
+          tableName: account
       
