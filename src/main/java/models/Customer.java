@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -69,11 +70,24 @@ public class Customer implements Serializable {
 	@JoinTable(name="customer_account", joinColumns = {@JoinColumn(name = "customerid", referencedColumnName = "customerid")}, inverseJoinColumns = {@JoinColumn(name = "accountid", referencedColumnName = "accountid")})
 	private Set<Account> accounts = new HashSet<>();
 	
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "customer_loan", joinColumns = { @JoinColumn(name = "customerid") }, inverseJoinColumns = { @JoinColumn(name = "loannumber") })
+	private Set<Loan> loans;
+	
 	/*private BCryptPasswordEncoder passwordEncoder;
 	
 	protected User() {
 		this.passwordEncoder = new BCryptPasswordEncoder();
 	}*/
+
+	public Set<Loan> getLoans() {
+		return loans;
+	}
+
+	public void setLoans(Set<Loan> loans) {
+		this.loans = loans;
+	}
 
 	public Set<Account> getAccounts() {
 		return accounts;

@@ -15,6 +15,10 @@ public class AccountService {
 	@Autowired
 	private AccountRepository accountRepository;
 	
+	public Optional<Account> getAccountByAccountid(Long accountid) {
+		return accountRepository.findById(accountid);
+	}
+	
 	public Account getAccountByAccountNumber(Long account_number) {
 		return accountRepository.findByAccountnumber(account_number);
 	}

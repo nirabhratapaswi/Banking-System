@@ -5,8 +5,17 @@ import java.time.LocalDateTime;
 public class PaymentPost {
 	private long paymentnumber;
 	private long paymentamount;
-	private LocalDateTime paymentdate;
+	// private LocalDateTime paymentdate;
 	private long loannumber;
+	private Loan loan;
+	
+	public Loan getLoan() {
+		return loan;
+	}
+
+	public void setLoan(Loan loan) {
+		this.loan = loan;
+	}
 
 	public long getPaymentnumber() {
 		return paymentnumber;
@@ -24,13 +33,13 @@ public class PaymentPost {
 		this.paymentamount = paymentamount;
 	}
 
-	public LocalDateTime getPaymentdate() {
+	/*public LocalDateTime getPaymentdate() {
 		return paymentdate;
 	}
 
 	public void setPaymentdate(LocalDateTime paymentdate) {
 		this.paymentdate = paymentdate;
-	}
+	}*/
 
 	public long getLoannumber() {
 		return loannumber;

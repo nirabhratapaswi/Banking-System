@@ -129,3 +129,6 @@ databaseChangeLog:
       
   - include:
       file: classpath:/db/changelog/changes/add-index-to-account.yaml
+      
+  - include:
+      file: classpath:/db/changelog/changes/one-to-many-tables.yaml

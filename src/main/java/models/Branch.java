@@ -4,14 +4,19 @@ package models;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -38,6 +43,32 @@ public class Branch implements Serializable {
 	
 	@NotNull
 	private Long assets;
+
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "branch_account", joinColumns = { @JoinColumn(name = "branchname") }, inverseJoinColumns = { @JoinColumn(name = "accountid") })
+	private Set<Account> accounts;
+	
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "branch_loan", joinColumns = { @JoinColumn(name = "branchname") }, inverseJoinColumns = { @JoinColumn(name = "loannumber") })
+	private Set<Loan> loans;
+
+	public Set<Account> getAccounts() {
+		return accounts;
+	}
+
+	public void setAccounts(Set<Account> accounts) {
+		this.accounts = accounts;
+	}
+
+	public Set<Loan> getLoans() {
+		return loans;
+	}
+
+	public void setLoans(Set<Loan> loans) {
+		this.loans = loans;
+	}
 
 	public Long getAssets() {
 		return assets;

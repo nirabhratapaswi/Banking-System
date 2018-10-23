@@ -22,7 +22,16 @@ public class CustomerPost {
 	private String city;
 	
 	private Set<Account> accounts;
+	private Set<Loan> loans;
 	
+	public Set<Loan> getLoans() {
+		return loans;
+	}
+
+	public void setLoans(Set<Loan> loans) {
+		this.loans = loans;
+	}
+
 	public Set<Account> getAccounts() {
 		return accounts;
 	}

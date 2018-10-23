@@ -1,0 +1,160 @@
+databaseChangeLog:
+  - changeSet:
+      id: 13
+      author: nirabhratapaswi
+      changes:
+        - createTable:
+            tableName: loan_payment
+            columns:
+              - column:
+                  name: loannumber
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: paymentnumber
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: loannumber
+            baseTableName: loan_payment
+            constraintName: fk_loannumber_loan_payment
+            deferrable: true
+            initiallyDeferred: true
+            onDelete: CASCADE
+            onUpdate: RESTRICT
+            referencedColumnNames: loannumber
+            referencedTableName: loan
+        - addForeignKeyConstraint:
+            baseColumnNames: paymentnumber
+            baseTableName: loan_payment
+            constraintName: fk_paymentnumber_loan_payment
+            deferrable: true
+            initiallyDeferred: true
+            onDelete: CASCADE
+            onUpdate: RESTRICT
+            referencedColumnNames: paymentnumber
+            referencedTableName: payment
+            
+  - changeSet:
+      id: 14
+      author: nirabhratapaswi
+      changes:
+        - createTable:
+            tableName: branch_account
+            columns:
+              - column:
+                  name: branchname
+                  type: varchar(255)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: accountid
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: branchname
+            baseTableName: branch_account
+            constraintName: fk_branchname_branch_payment
+            deferrable: true
+            initiallyDeferred: true
+            onDelete: CASCADE
+            onUpdate: RESTRICT
+            referencedColumnNames: branchname
+            referencedTableName: branch
+        - addForeignKeyConstraint:
+            baseColumnNames: accountid
+            baseTableName: branch_account
+            constraintName: fk_accountid_branch_account
+            deferrable: true
+            initiallyDeferred: true
+            onDelete: CASCADE
+            onUpdate: RESTRICT
+            referencedColumnNames: accountid
+            referencedTableName: account
+
+  - changeSet:
+      id: 15
+      author: nirabhratapaswi
+      changes:
+        - createTable:
+            tableName: branch_loan
+            columns:
+              - column:
+                  name: branchname
+                  type: varchar(255)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: loannumber
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: loannumber
+            baseTableName: branch_loan
+            constraintName: fk_loannumber_branch_loan
+            deferrable: true
+            initiallyDeferred: true
+            onDelete: CASCADE
+            onUpdate: RESTRICT
+            referencedColumnNames: loannumber
+            referencedTableName: loan
+        - addForeignKeyConstraint:
+            baseColumnNames: branchname
+            baseTableName: branch_loan
+            constraintName: fk_branchname_branch_loan
+            deferrable: true
+            initiallyDeferred: true
+            onDelete: CASCADE
+            onUpdate: RESTRICT
+            referencedColumnNames: branchname
+            referencedTableName: branch
+            
+  - changeSet:
+      id: 16
+      author: nirabhratapaswi
+      changes:
+        - createTable:
+            tableName: customer_loan
+            columns:
+              - column:
+                  name: customerid
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: loannumber
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: loannumber
+            baseTableName: customer_loan
+            constraintName: fk_loannumber_customer_loan
+            deferrable: true
+            initiallyDeferred: true
+            onDelete: CASCADE
+            onUpdate: RESTRICT
+            referencedColumnNames: loannumber
+            referencedTableName: loan
+        - addForeignKeyConstraint:
+            baseColumnNames: customerid
+            baseTableName: customer_loan
+            constraintName: fk_customerid_customer_loan
+            deferrable: true
+            initiallyDeferred: true
+            onDelete: CASCADE
+            onUpdate: RESTRICT
+            referencedColumnNames: customerid
+            referencedTableName: customer

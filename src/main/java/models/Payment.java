@@ -41,6 +41,7 @@ public class Payment implements Serializable {
 	@NotNull
 	private LocalDateTime paymentdate;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="loannumber")
 	private Loan loan;

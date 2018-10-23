@@ -3,7 +3,7 @@ package models;
 public class LoanPost {
 	private long loannumber;
 	protected long amount;
-	private Integer customerid;
+	private Long customerid;
 	private String branchname;
 
 	public long getLoannumber() {
@@ -26,11 +26,11 @@ public class LoanPost {
 		return amount;
 	}
 
-	public Integer getCustomerid() {
+	public Long getCustomerid() {
 		return customerid;
 	}
 
-	public void setCustomerid(Integer customerid) {
+	public void setCustomerid(Long customerid) {
 		this.customerid = customerid;
 	}
 

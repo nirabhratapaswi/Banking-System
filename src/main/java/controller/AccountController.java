@@ -24,6 +24,7 @@ import models.Account;
 import models.AccountPost;
 import models.Branch;
 import models.Customer;
+import models.Loan;
 import repositories.AccountRepository;
 import repositories.BranchRepository;
 import repositories.CustomerRepository;
@@ -122,6 +123,7 @@ public class AccountController {
 		System.out.println("Trying to save account: " + accountPost.toCustomString());
 		Account account = new Account();
 		Customer customer;
+		Branch branch;
 		Random rnd = new Random();
 		int n = 100000 + rnd.nextInt(900000);
 		Integer new_account_number = this.newAccountnumber();
@@ -140,7 +142,6 @@ public class AccountController {
 			return false;
 		}
 		Optional<Branch> branchOptional = branchService.getBranch(accountPost.getBranchname());
-		Branch branch;
 		if (branchOptional.isPresent()) {
 			branch = branchOptional.get();
 			System.out.println("Adding branch: " + branch.toCustomString());
@@ -151,6 +152,8 @@ public class AccountController {
 		account.setBranch(branch);
 		this.accountService.saveAccount(account);
 		customer.getAccounts().add(account);
+		branch.getAccounts().add(account);
+		this.branchService.saveBranch(branch);
 		return this.customerService.saveCustomer(customer);
 	}
 	
@@ -163,6 +166,7 @@ public class AccountController {
 			return false;
 		}
 		Customer customer;
+		Branch branch;
 		account.setBalance(accountPost.getBalance());
 		account.setIsa(accountPost.getIsa());
 		Optional<Customer> customerOptional = customerService.getCustomer(((Integer) accountPost.customerid).longValue());
@@ -182,7 +186,6 @@ public class AccountController {
 			return false;
 		}
 		Optional<Branch> branchOptional = branchService.getBranch(accountPost.getBranchname());
-		Branch branch;
 		if (branchOptional.isPresent()) {
 			branch = branchOptional.get();
 			System.out.println("Adding branch: " + branch.toCustomString());
@@ -192,12 +195,18 @@ public class AccountController {
 		account.setBranch(branch);
 		this.accountService.saveAccount(account);
 		customer.getAccounts().add(account);
+		branch.getAccounts().add(account);
+		this.branchService.saveBranch(branch);
 		return this.customerService.saveCustomer(customer);
 	}
 	
 	@RequestMapping(value = "/delete/{accountid}")
 	@GetMapping
 	public @ResponseBody Boolean deleteAccount(@PathVariable("accountid") Long accountid) {
+		Optional<Account> accountOptional = this.accountService.getAccountByAccountid(accountid);
+		if (!accountOptional.isPresent()) {
+			return false;
+		}
 		return this.accountService.deleteAccount(accountid);
 	}
 	

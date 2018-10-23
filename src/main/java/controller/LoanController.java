@@ -15,10 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.MediaType;
 import java.util.Optional;
 
+import models.Branch;
 import models.Customer;
 import models.Loan;
+import models.LoanPost;
 import service.LoanService;
 import service.CustomerService;
+import service.BranchService;
 
 @Controller
 @RestController
@@ -28,6 +31,8 @@ public class LoanController {
 	private LoanService loanService;
 	@Autowired
 	private CustomerService customerService;
+	@Autowired
+	private BranchService branchService;
 	
 	protected LoanController() {}
 	
@@ -50,27 +55,35 @@ public class LoanController {
 	
 	@RequestMapping(value = "/update/new", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	@PostMapping
-	public @ResponseBody Boolean addNewLoan(Loan loan) {
-		/*System.out.println("Customer id: " + loanExtended.getCustomerId());
-		System.out.println("Trying to save loan: " + loanExtended.toCustomString());
-		Optional<Customer> customer = customerService.getCustomer(loanExtended.getCustomerId());
-		if (customer.isPresent()) {
-			Customer loan_customer = customer.get();
-			Loan new_loan = new Loan();
-			new_loan.setAmount(loanExtended.getAmount());
-			new_loan.setCustomer(loan_customer);
-			System.out.println("New Loan: " + new_loan.toCustomString());
-			return this.loanService.saveLoan(new_loan);
-		} else {
+	public @ResponseBody Boolean addNewLoan(LoanPost loanPost) {
+		Loan loan = new Loan();
+		Customer customer;
+		loan.setAmount(loanPost.getAmount());
+		Branch branch = this.branchService.getBranchByBranchName(loanPost.getBranchname());
+		if (branch == null) {
 			return false;
-		}*/
-		System.out.println("Trying to save loan: " + loan.toCustomString());
-		return this.loanService.saveLoan(loan);
+		}
+		loan.setBranch(branch);
+		Optional<Customer> customerOptional = this.customerService.getCustomer(loanPost.getCustomerid());
+		if (!customerOptional.isPresent()) {
+			return false;
+		}
+		customer = customerOptional.get();
+		loan.setCustomer(customer);
+		this.loanService.saveLoan(loan);
+		customer.getLoans().add(loan);
+		this.customerService.saveCustomer(customer);
+		branch.getLoans().add(loan);
+		return this.branchService.saveBranch(branch);
 	}
 	
 	@RequestMapping(value = "/delete/{loannumber}")
 	@GetMapping
 	public @ResponseBody Boolean deleteLoan(@PathVariable("loannumber") Long loannumber) {
+		Optional<Loan> loanOptional = this.loanService.getLoan(loannumber);
+		if (!loanOptional.isPresent()) {
+			return false;
+		}
 		return this.loanService.deleteLoan(loannumber);
 	}
 	

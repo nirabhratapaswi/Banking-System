@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 
 import models.Account;
 import models.Branch;
+import models.BranchPost;
 import service.BranchService;
 
 @Controller
@@ -39,16 +40,57 @@ public class BranchController {
 		return this.branchService.getBranchByBranchName(branchname);
 	}
 	
+	@RequestMapping(value = "/getwithaccountsandloans/{branchname}")
+	@GetMapping
+	public @ResponseBody BranchPost getBranchWithAccountsAndLoans(@PathVariable("branchname") String branchname) {
+		Branch branch = this.branchService.getBranchByBranchName(branchname);
+		if (branch == null) {
+			return null;
+		}
+		BranchPost branchPost = new BranchPost();
+		branchPost.setAssets(branch.getAssets());
+		branchPost.setBranchcity(branch.getBranchcity());
+		branchPost.setBranchname(branch.getBranchname());
+		branchPost.setAccounts(branch.getAccounts());
+		branchPost.setLoans(branch.getLoans());
+		return branchPost;
+	}
+	
+	/*@RequestMapping(value = "/getwithaccountsandloans/{branchname}")
+	@GetMapping
+	public @ResponseBody BranchPost getBranchWithAccountsAndLoans(@PathVariable("branchname") String branchname) {
+		BranchPost branchPost = new BranchPost();
+		return this.branchService.getBranchByBranchName(branchname);
+	}*/
+	
 	@RequestMapping(value = "/update/new", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	@PostMapping
-	public @ResponseBody Boolean addNewBranch(Branch branch) {
-		System.out.println("Trying to save branch: " + branch.toCustomString());
+	public @ResponseBody Boolean addNewBranch(BranchPost branchPost) {
+		System.out.println("Trying to save branch: " + branchPost.toCustomString());
+		Branch branch = new Branch();
+		branch.setAssets(branchPost.getAssets());
+		branch.setBranchcity(branchPost.getBranchcity());
+		branch.setBranchname(branchPost.getBranchname());
+		return this.branchService.saveBranch(branch);
+	}
+	
+	@RequestMapping(value = "/update/exsiting", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	@PostMapping
+	public @ResponseBody Boolean updateBranch(BranchPost branchPost) {
+		System.out.println("Trying to save branch: " + branchPost.toCustomString());
+		Branch branch = this.branchService.getBranchByBranchName(branchPost.getBranchname());
+		branch.setAssets(branchPost.getAssets());
+		branch.setBranchcity(branchPost.getBranchcity());
+		branch.setBranchname(branchPost.getBranchname());
 		return this.branchService.saveBranch(branch);
 	}
 	
 	@RequestMapping(value = "/delete/{branchname}")
 	@GetMapping
 	public @ResponseBody Boolean deleteBranch(@PathVariable("branchame") String branchname) {
+		if (this.branchService.getBranchByBranchName(branchname) == null) {
+			return false;
+		}
 		return this.branchService.deleteBranch(branchname);
 	}
 	

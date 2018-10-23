@@ -1,9 +1,29 @@
 package models;
 
+import java.util.Set;
+
 public class BranchPost {
 	private String branchname;
 	private String branchcity;
 	private Long assets;
+	private Set<Account> accounts;
+	public Set<Account> getAccounts() {
+		return accounts;
+	}
+
+	public void setAccounts(Set<Account> accounts) {
+		this.accounts = accounts;
+	}
+
+	public Set<Loan> getLoans() {
+		return loans;
+	}
+
+	public void setLoans(Set<Loan> loans) {
+		this.loans = loans;
+	}
+
+	private Set<Loan> loans;
 
 	public Long getAssets() {
 		return assets;
