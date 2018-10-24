@@ -56,7 +56,7 @@ Log into postgres shell, create a database, update GRANT PRIVELEGES to user and 
 ```sh
 $ psql
 $ CREATE DATABASE banking;
-$ GRANT ALL PRIVILEGES ON banking to <user>;
+$ GRANT ALL PRIVILEGES ON DATABASE banking to <user>;
 $ \c banking;
 ```
 
