@@ -1,0 +1,514 @@
+databaseChangeLog:
+  - changeSet:
+      id: 17
+      author: nirabhratapaswi
+      comment: "Insert 2nd Customer"
+      changes:
+        - insert :
+            tableName: customer
+            columns:
+              - column:
+                  name: customerid
+                  value: 102115032
+              - column:
+                  name: username
+                  value: "parthshah"
+              - column:
+                  name: name
+                  value: "Parth Shah"
+              - column:
+                  name: password
+                  value: "parthchemical"
+              - column:
+                  name: street
+                  value: "Mulund"
+              - column:
+                  name: city
+                  value: "Mumbai"
+                  
+  - changeSet:
+      id: 18
+      author: nirabhratapaswi
+      comment: "Insert 1st Branch"
+      changes:
+        - insert :
+            tableName: branch
+            columns:
+              - column:
+                  name: branchname
+                  value: "SBI NIT Trichy"
+              - column:
+                  name: branchcity
+                  value: "Tiruchirappalli"
+              - column:
+                  name: assets
+                  value: 100000000
+                  
+  - changeSet:
+      id: 19
+      author: nirabhratapaswi
+      comment: "Insert 2nd Branch"
+      changes:
+        - insert :
+            tableName: branch
+            columns:
+              - column:
+                  name: branchname
+                  value: "HDFC Andheri"
+              - column:
+                  name: branchcity
+                  value: "Mumbai"
+              - column:
+                  name: assets
+                  value: 700000000              
+
+  - changeSet:
+      id: 20
+      author: nirabhratapaswi
+      comment: "Insert 1st Account"
+      changes:
+        - insert :
+            tableName: account
+            columns:
+              - column:
+                  name: accountid
+                  value: 560115436
+              - column:
+                  name: accountnumber
+                  value: 654478911
+              - column:
+                  name: balance
+                  value: 15000000
+              - column:
+                  name: branchname
+                  value: "HDFC Andheri"
+              - column:
+                  name: isa
+                  value: current
+                  
+  - changeSet:
+      id: 21
+      author: nirabhratapaswi
+      comment: "Insert 2nd Account"
+      changes:
+        - insert :
+            tableName: account
+            columns:
+              - column:
+                  name: accountid
+                  value: 560115437
+              - column:
+                  name: accountnumber
+                  value: 154468973
+              - column:
+                  name: balance
+                  value: 3400000
+              - column:
+                  name: branchname
+                  value: "HDFC Andheri"
+              - column:
+                  name: isa
+                  value: savings
+                  
+  - changeSet:
+      id: 22
+      author: nirabhratapaswi
+      comment: "Insert 3rd Account"
+      changes:
+        - insert :
+            tableName: account
+            columns:
+              - column:
+                  name: accountid
+                  value: 560115438
+              - column:
+                  name: accountnumber
+                  value: 887167561
+              - column:
+                  name: balance
+                  value: 12000
+              - column:
+                  name: branchname
+                  value: "SBI NIT Trichy"
+              - column:
+                  name: isa
+                  value: savings
+                  
+  - changeSet:
+      id: 23
+      author: nirabhratapaswi
+      comment: "Insert 1st Loan"
+      changes:
+        - insert :
+            tableName: loan
+            columns:
+              - column:
+                  name: loannumber
+                  value: 465479891
+              - column:
+                  name: amount
+                  value: 500000
+              - column:
+                  name: customerid
+                  value: 102115029
+              - column:
+                  name: branchname
+                  value: "HDFC Andheri"
+                  
+  - changeSet:
+      id: 24
+      author: nirabhratapaswi
+      comment: "Insert 2nd Loan"
+      changes:
+        - insert :
+            tableName: loan
+            columns:
+              - column:
+                  name: loannumber
+                  value: 465479892
+              - column:
+                  name: amount
+                  value: 100000
+              - column:
+                  name: customerid
+                  value: 102115029
+              - column:
+                  name: branchname
+                  value: "SBI NIT Trichy"
+                  
+  - changeSet:
+      id: 25
+      author: nirabhratapaswi
+      comment: "Insert 3rd Loan"
+      changes:
+        - insert :
+            tableName: loan
+            columns:
+              - column:
+                  name: loannumber
+                  value: 465479893
+              - column:
+                  name: amount
+                  value: 4000000
+              - column:
+                  name: customerid
+                  value: 102115032
+              - column:
+                  name: branchname
+                  value: "HDFC Andheri"
+                  
+  - changeSet:
+      id: 26
+      author: nirabhratapaswi
+      comment: "Insert 1st Payment"
+      changes:
+        - insert :
+            tableName: payment
+            columns:
+              - column:
+                  name: paymentnumber
+                  value: 54116549
+              - column:
+                  name: paymentamount
+                  value: 50000
+              - column:
+                  name: loannumber
+                  value: 465479891
+              - column:
+                  name: paymentdate
+                  value: now()
+
+  - changeSet:
+      id: 27
+      author: nirabhratapaswi
+      comment: "Insert 2nd Payment"
+      changes:
+        - insert :
+            tableName: payment
+            columns:
+              - column:
+                  name: paymentnumber
+                  value: 54116550
+              - column:
+                  name: paymentamount
+                  value: 25000
+              - column:
+                  name: loannumber
+                  value: 465479891
+              - column:
+                  name: paymentdate
+                  value: now()
+  - changeSet:
+      id: 28
+      author: nirabhratapaswi
+      comment: "Insert 3rd Payment"
+      changes:
+        - insert :
+            tableName: payment
+            columns:
+              - column:
+                  name: paymentnumber
+                  value: 54116551
+              - column:
+                  name: paymentamount
+                  value: 500000
+              - column:
+                  name: loannumber
+                  value: 465479892
+              - column:
+                  name: paymentdate
+                  value: now()
+  - changeSet:
+      id: 29
+      author: nirabhratapaswi
+      comment: "Insert customer_account relationship"
+      changes:
+        - insert :
+            tableName: customer_account
+            columns:
+              - column:
+                  name: customerid
+                  value: 102115032
+              - column:
+                  name: accountid
+                  value: 560115436
+
+  - changeSet:
+      id: 30
+      author: nirabhratapaswi
+      comment: "Insert customer_account relationship"
+      changes:
+        - insert :
+            tableName: customer_account
+            columns:
+              - column:
+                  name: customerid
+                  value: 102115029
+              - column:
+                  name: accountid
+                  value: 560115437
+                  
+  - changeSet:
+      id: 31
+      author: nirabhratapaswi
+      comment: "Insert customer_account relationship"
+      changes:
+        - insert :
+            tableName: customer_account
+            columns:
+              - column:
+                  name: customerid
+                  value: 102115032
+              - column:
+                  name: accountid
+                  value: 560115437
+                  
+  - changeSet:
+      id: 32
+      author: nirabhratapaswi
+      comment: "Insert customer_account relationship"
+      changes:
+        - insert :
+            tableName: customer_account
+            columns:
+              - column:
+                  name: customerid
+                  value: 102115029
+              - column:
+                  name: accountid
+                  value: 560115438
+
+  - changeSet:
+      id: 33
+      author: nirabhratapaswi
+      comment: "Insert branch_account relationship"
+      changes:
+        - insert :
+            tableName: branch_account
+            columns:
+              - column:
+                  name: branchname
+                  value: "HDFC Andheri"
+              - column:
+                  name: accountid
+                  value: 560115436
+                  
+  - changeSet:
+      id: 34
+      author: nirabhratapaswi
+      comment: "Insert branch_account relationship"
+      changes:
+        - insert :
+            tableName: branch_account
+            columns:
+              - column:
+                  name: branchname
+                  value: "HDFC Andheri"
+              - column:
+                  name: accountid
+                  value: 560115437
+
+  - changeSet:
+      id: 35
+      author: nirabhratapaswi
+      comment: "Insert branch_account relationship"
+      changes:
+        - insert :
+            tableName: branch_account
+            columns:
+              - column:
+                  name: branchname
+                  value: "SBI NIT Trichy"
+              - column:
+                  name: accountid
+                  value: 560115438
+
+  - changeSet:
+      id: 36
+      author: nirabhratapaswi
+      comment: "Insert branch_loan relationship"
+      changes:
+        - insert :
+            tableName: branch_loan
+            columns:
+              - column:
+                  name: branchname
+                  value: "HDFC Andheri"
+              - column:
+                  name: loannumber
+                  value: 465479891
+                  
+  - changeSet:
+      id: 37
+      author: nirabhratapaswi
+      comment: "Insert branch_loan relationship"
+      changes:
+        - insert :
+            tableName: branch_loan
+            columns:
+              - column:
+                  name: branchname
+                  value: "SBI NIT Trichy"
+              - column:
+                  name: loannumber
+                  value: 465479892
+                  
+  - changeSet:
+      id: 38
+      author: nirabhratapaswi
+      comment: "Insert branch_loan relationship"
+      changes:
+        - insert :
+            tableName: branch_loan
+            columns:
+              - column:
+                  name: branchname
+                  value: "HDFC Andheri"
+              - column:
+                  name: loannumber
+                  value: 465479893
+
+  - changeSet:
+      id: 39
+      author: nirabhratapaswi
+      comment: "Insert customer_loan relationship"
+      changes:
+        - insert :
+            tableName: customer_loan
+            columns:
+              - column:
+                  name: customerid
+                  value: 102115029
+              - column:
+                  name: loannumber
+                  value: 465479891
+
+  - changeSet:
+      id: 40
+      author: nirabhratapaswi
+      comment: "Insert customer_loan relationship"
+      changes:
+        - insert :
+            tableName: customer_loan
+            columns:
+              - column:
+                  name: customerid
+                  value: 102115032
+              - column:
+                  name: loannumber
+                  value: 465479891
+
+  - changeSet:
+      id: 41
+      author: nirabhratapaswi
+      comment: "Insert customer_loan relationship"
+      changes:
+        - insert :
+            tableName: customer_loan
+            columns:
+              - column:
+                  name: customerid
+                  value: 102115029
+              - column:
+                  name: loannumber
+                  value: 465479892
+
+  - changeSet:
+      id: 42
+      author: nirabhratapaswi
+      comment: "Insert customer_loan relationship"
+      changes:
+        - insert :
+            tableName: customer_loan
+            columns:
+              - column:
+                  name: customerid
+                  value: 102115032
+              - column:
+                  name: loannumber
+                  value: 465479893
+
+  - changeSet:
+      id: 43
+      author: nirabhratapaswi
+      comment: "Insert loan_payment relationship"
+      changes:
+        - insert :
+            tableName: loan_payment
+            columns:
+              - column:
+                  name: paymentnumber
+                  value: 54116549
+              - column:
+                  name: loannumber
+                  value: 465479893
+
+  - changeSet:
+      id: 44
+      author: nirabhratapaswi
+      comment: "Insert loan_payment relationship"
+      changes:
+        - insert :
+            tableName: loan_payment
+            columns:
+              - column:
+                  name: paymentnumber
+                  value: 54116551
+              - column:
+                  name: loannumber
+                  value: 465479893
+
+  - changeSet:
+      id: 45
+      author: nirabhratapaswi
+      comment: "Insert loan_payment relationship"
+      changes:
+        - insert :
+            tableName: loan_payment
+            columns:
+              - column:
+                  name: paymentnumber
+                  value: 54116550
+              - column:
+                  name: loannumber
+                  value: 465479891
