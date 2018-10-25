@@ -3,6 +3,7 @@ package service;
 import org.springframework.stereotype.Service;
 
 import models.Loan;
+import models.LoanPost;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
@@ -46,5 +47,17 @@ public class LoanService {
 			return false;
 		}
 		return true;
+	}
+	
+	public LoanPost convertToLoanPost(Loan loan) {
+		LoanPost loanPost = new LoanPost();
+		loanPost.setAmount(loan.getAmount());
+		loanPost.setBranchname(loan.getBranch().getBranchname());
+		loanPost.setCustomerid(loan.getCustomer().getCustomerid());
+		loanPost.setLoannumber(loan.getLoannumber());
+		loanPost.setBranch(loan.getBranch());
+		loanPost.setPayments(loan.getPayments());
+		loanPost.setCustomer(loan.getCustomer());
+		return loanPost;
 	}
 }

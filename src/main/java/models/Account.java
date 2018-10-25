@@ -70,11 +70,7 @@ public class Account implements Serializable {
 	@JoinColumn(name="branchname")
 	private Branch branch;
 	
-	/*@ManyToOne
-	@JoinColumn(name="customerid")
-	private Customer customer;*/
-	
-//	@JsonIgnore
+	@JsonIgnore
 	@ManyToMany(mappedBy = "accounts")
 	private Set<Customer> customers = new HashSet<>();
 

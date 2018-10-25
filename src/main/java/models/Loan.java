@@ -46,7 +46,7 @@ public class Loan implements Serializable {
 	@JoinColumn(name="branchname")
 	private Branch branch;
 	
-	// @JsonIgnore
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "loan_payment", joinColumns = { @JoinColumn(name = "loannumber") }, inverseJoinColumns = { @JoinColumn(name = "paymentnumber") })
 	private Set<Payment> payments;

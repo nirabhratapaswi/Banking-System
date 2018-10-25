@@ -1,6 +1,7 @@
 package models;
 
 import java.util.List;
+import java.util.Set;
 
 public class AccountPost {
 	private long accountnumber;
@@ -15,8 +16,26 @@ public class AccountPost {
 	private long balance;
 	private String isa;
 	private String branchname;
-	public Integer customerid;
-	
+	private Integer customerid;
+	private Set<Customer> customers;
+	private Branch branch;
+
+	public Branch getBranch() {
+		return branch;
+	}
+
+	public void setBranch(Branch branch) {
+		this.branch = branch;
+	}
+
+	public Set<Customer> getCustomers() {
+		return customers;
+	}
+
+	public void setCustomers(Set<Customer> customers) {
+		this.customers = customers;
+	}
+
 	public String getIsa() {
 		return isa;
 	}

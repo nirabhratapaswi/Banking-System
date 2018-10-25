@@ -4,3 +4,6 @@
 *.class
 *.lst
 *.txt
+*.jar
+.idea/libraries/
+target/classes/META-INF/

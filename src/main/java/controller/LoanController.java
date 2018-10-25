@@ -45,12 +45,25 @@ public class LoanController {
 	@RequestMapping(value = "/get/{loannumber}")
 	@GetMapping
 	public @ResponseBody Loan getLoan(@PathVariable("loannumber") Long loannumber) {
-		Optional<Loan> loan = this.loanService.getLoan(loannumber);
-		if (loan.isPresent()) {
-			return loan.get();
+		Optional<Loan> loanOptional = this.loanService.getLoan(loannumber);
+		if (loanOptional.isPresent()) {
+			return loanOptional.get();
 		} else {
 			return null;
 		}
+	}
+	
+	@RequestMapping(value = "/getwithcustomerandpayments/{loannumber}")
+	@GetMapping
+	public @ResponseBody LoanPost getLoanWithCustomerAndPayments(@PathVariable("loannumber") Long loannumber) {
+		Optional<Loan> loanOptional = this.loanService.getLoan(loannumber);
+		LoanPost loanPost;
+		if (loanOptional.isPresent()) {
+			loanPost = this.loanService.convertToLoanPost(loanOptional.get());
+		} else {
+			return null;
+		}
+		return loanPost;
 	}
 	
 	@RequestMapping(value = "/update/new", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)

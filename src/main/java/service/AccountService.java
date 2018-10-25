@@ -3,6 +3,7 @@ package service;
 import org.springframework.stereotype.Service;
 
 import models.Account;
+import models.AccountPost;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
@@ -44,5 +45,16 @@ public class AccountService {
 			return false;
 		}
 		return true;
+	}
+	
+	public AccountPost convertToAccountPost(Account account) {
+		AccountPost accountPost = new AccountPost();
+		accountPost.setAccountnumber(account.getAccountnumber());
+		accountPost.setBalance(account.getBalance());
+		accountPost.setBranch(account.getBranch());
+		accountPost.setCustomers(account.getCustomers());
+		accountPost.setBranchname(account.getBranch().getBranchname());
+		accountPost.setIsa(account.getIsa());
+		return accountPost;
 	}
 }

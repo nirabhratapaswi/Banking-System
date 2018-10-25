@@ -117,6 +117,19 @@ public class AccountController {
 		return account;
 	}
 	
+	@RequestMapping(value = "/getwithbranchandcustomers/{accountnumber}")
+	@GetMapping
+	public @ResponseBody AccountPost getAccountWithBranchAndCustomers(@PathVariable("accountnumber") Long accountnumber) {
+		Account account = this.accountService.getAccountByAccountNumber(accountnumber);
+		AccountPost accountPost;
+		if (account != null && account.getCustomers() != null) {
+			accountPost = this.accountService.convertToAccountPost(account);
+		} else {
+			return null;
+		}
+		return accountPost;
+	}
+	
 	@RequestMapping(value = "/update/new", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	@PostMapping
 	public @ResponseBody Boolean addNewAccount(AccountPost accountPost) {
@@ -133,7 +146,7 @@ public class AccountController {
 		account.setAccountnumber(new_account_number);
 		account.setBalance(accountPost.getBalance());
 		account.setIsa(accountPost.getIsa());
-		Optional<Customer> customerOptional = customerService.getCustomer(((Integer) accountPost.customerid).longValue());
+		Optional<Customer> customerOptional = customerService.getCustomer(((Integer) accountPost.getCustomerid()).longValue());
 		// Optional<Customer> customerOptional = customerService.getCustomer(((Integer) 102115029).longValue());
 		if (customerOptional.isPresent()) {
 			customer = customerOptional.get();
@@ -169,7 +182,7 @@ public class AccountController {
 		Branch branch;
 		account.setBalance(accountPost.getBalance());
 		account.setIsa(accountPost.getIsa());
-		Optional<Customer> customerOptional = customerService.getCustomer(((Integer) accountPost.customerid).longValue());
+		Optional<Customer> customerOptional = customerService.getCustomer(((Integer) accountPost.getCustomerid()).longValue());
 		if (customerOptional.isPresent()) {
 			customer = customerOptional.get();
 			System.out.println("Adding customer: " + customer.getName());
