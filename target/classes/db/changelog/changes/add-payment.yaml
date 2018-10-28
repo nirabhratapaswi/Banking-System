@@ -27,6 +27,11 @@ databaseChangeLog:
                   type: bigserial
                   constraints:
                     nullable: false
+              - column:
+                  name: accountid
+                  type: bigserial
+                  constraints:
+                    nullable: false
         - addForeignKeyConstraint:
             baseColumnNames: loannumber
             baseTableName: payment
@@ -37,3 +42,13 @@ databaseChangeLog:
             onUpdate: RESTRICT
             referencedColumnNames: loannumber
             referencedTableName: loan
+        - addForeignKeyConstraint:
+            baseColumnNames: accountid
+            baseTableName: payment
+            constraintName: fk_accountid_payment
+            deferrable: true
+            initiallyDeferred: true
+            onDelete: NO ACTION
+            onUpdate: RESTRICT
+            referencedColumnNames: accountid
+            referencedTableName: account

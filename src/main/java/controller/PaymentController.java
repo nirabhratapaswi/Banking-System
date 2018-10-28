@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.MediaType;
 
+import models.Account;
 import models.Loan;
 import models.Payment;
 import models.PaymentPost;
 import service.PaymentService;
+import service.AccountService;
 import service.LoanService;
 
 @Controller
@@ -31,6 +33,9 @@ public class PaymentController {
 	
 	@Autowired
 	private LoanService loanService;
+	
+	@Autowired
+	private AccountService accountService;
 	
 	protected PaymentController() {}
 	
@@ -74,7 +79,14 @@ public class PaymentController {
 	public @ResponseBody Boolean addNewPayment(PaymentPost paymentPost) {
 		System.out.println("Trying to save payment: " + paymentPost.toCustomString());
 		Payment payment = new Payment();
-		payment.setPaymentamount(payment.getPaymentamount());
+		Account account;
+		Optional<Account> accountOptional = this.accountService.getAccountByAccountid(paymentPost.getAccountid());
+		if (!accountOptional.isPresent()) {
+			// System.out.println("Account not found");
+			return false;
+		}
+		account = accountOptional.get();
+		payment.setPaymentamount(paymentPost.getPaymentamount());
 		payment.setPaymentdate(LocalDateTime.now());
 		Optional<Loan> loanOptional = this.loanService.getLoan(paymentPost.getLoannumber());
 		Loan loan;
@@ -84,7 +96,15 @@ public class PaymentController {
 		loan = loanOptional.get();
 		loan.getPayments().add(payment);
 		payment.setLoan(loanOptional.get());
+		payment.setAccount(account);
+		if (payment.getPaymentamount() > account.getBalance()) {
+			System.out.println("Payment amount: " + payment.getPaymentamount() + ", balance: " + account.getBalance());
+			return false;
+		}
 		this.paymentService.savePayment(payment);
+		account.getPayments().add(payment);
+		account.setBalance(account.getBalance() - payment.getPaymentamount());
+		this.accountService.saveAccount(account);
 		return this.loanService.saveLoan(loan);
 	}
 	

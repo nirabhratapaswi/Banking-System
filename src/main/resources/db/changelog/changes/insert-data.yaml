@@ -217,6 +217,9 @@ databaseChangeLog:
               - column:
                   name: paymentdate
                   value: now()
+              - column:
+                  name: accountid
+                  value: 560115437
 
   - changeSet:
       id: 27
@@ -238,6 +241,9 @@ databaseChangeLog:
               - column:
                   name: paymentdate
                   value: now()
+              - column:
+                  name: accountid
+                  value: 560115437
   - changeSet:
       id: 28
       author: nirabhratapaswi
@@ -258,6 +264,9 @@ databaseChangeLog:
               - column:
                   name: paymentdate
                   value: now()
+              - column:
+                  name: accountid
+                  value: 560115436
   - changeSet:
       id: 29
       author: nirabhratapaswi
@@ -512,3 +521,48 @@ databaseChangeLog:
               - column:
                   name: loannumber
                   value: 465479891
+                  
+  - changeSet:
+      id: 46
+      author: nirabhratapaswi
+      comment: "Insert account_payment relationship"
+      changes:
+        - insert :
+            tableName: account_payment
+            columns:
+              - column:
+                  name: paymentnumber
+                  value: 54116549
+              - column:
+                  name: accountid
+                  value: 560115437
+                  
+  - changeSet:
+      id: 47
+      author: nirabhratapaswi
+      comment: "Insert account_payment relationship"
+      changes:
+        - insert :
+            tableName: account_payment
+            columns:
+              - column:
+                  name: paymentnumber
+                  value: 54116550
+              - column:
+                  name: accountid
+                  value: 560115437
+                  
+  - changeSet:
+      id: 48
+      author: nirabhratapaswi
+      comment: "Insert account_payment relationship"
+      changes:
+        - insert :
+            tableName: account_payment
+            columns:
+              - column:
+                  name: paymentnumber
+                  value: 54116551
+              - column:
+                  name: accountid
+                  value: 560115436

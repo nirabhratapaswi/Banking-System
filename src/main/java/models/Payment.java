@@ -45,6 +45,18 @@ public class Payment implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="loannumber")
 	private Loan loan;
+	
+	@ManyToOne
+	@JoinColumn(name="accountid")
+	private Account account;
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}
 
 	public long getPaymentnumber() {
 		return paymentnumber;

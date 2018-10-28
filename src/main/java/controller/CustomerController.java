@@ -69,7 +69,7 @@ public class CustomerController {
 		}
 	}
 	
-	@RequestMapping(value = "/getwithaccountsandloans/{customerid}")
+	/*@RequestMapping(value = "/getwithaccountsandloans/{customerid}")
 	@GetMapping
 	public @ResponseBody CustomerPost getCustomerWithAccounts(@PathVariable("customerid") Long customerid) {
 		Optional<Customer> customer = this.customerService.getCustomerByCustomerid(customerid);
@@ -79,6 +79,29 @@ public class CustomerController {
 		}
 		cust = customer.get();
 		CustomerPost custPost = new CustomerPost();
+		custPost.setCity(cust.getCity());
+		custPost.setName(cust.getName());
+		custPost.setUsername(cust.getUsername());
+		custPost.setStreet(cust.getStreet());
+		custPost.setAccounts(cust.getAccounts());
+		custPost.setLoans(cust.getLoans());
+		if (cust.getAccounts() != null) {
+			for (Account a: cust.getAccounts()) {
+				System.out.println(a.toCustomString());
+			}
+		}
+		return custPost;
+	}*/
+	
+	@RequestMapping(value = "/getwithaccountsandloans/{username}")
+	@GetMapping
+	public @ResponseBody CustomerPost getCustomerWithAccountsUsingUsername(@PathVariable("username") String username) {
+		Customer cust = this.customerService.getCustomerByUsername(username);
+		if (cust == null) {
+			return null;
+		}
+		CustomerPost custPost = new CustomerPost();
+		custPost.setCustomerid(cust.getCustomerid());
 		custPost.setCity(cust.getCity());
 		custPost.setName(cust.getName());
 		custPost.setUsername(cust.getUsername());
@@ -135,17 +158,6 @@ public class CustomerController {
 		customer.setPassword(customerPost.getPassword());
 		customer.setStreet(customerPost.getStreet());
 		customer.setCity(customerPost.getCity());
-		Set<Account> accountSet = new HashSet<>();
-		Optional<Account> accountOptional = accountService.getAccount(((Integer) 6).longValue());
-		if (accountOptional.isPresent()) {
-			Account account = accountOptional.get();
-			System.out.println("Adding account: " + account.toCustomString());
-			accountSet.add(account);
-			for (Account a: accountSet) {
-				System.out.println("Flag 0: " + a.toCustomString());
-			}
-		}
-		customer.setAccounts(accountSet);
 		Boolean success = this.customerService.saveCustomer(customer);
 		if (success) {
 			response.put("success", "true");

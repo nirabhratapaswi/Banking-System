@@ -117,7 +117,7 @@ public class AccountController {
 		return account;
 	}
 	
-	@RequestMapping(value = "/getwithbranchandcustomers/{accountnumber}")
+	@RequestMapping(value = "/getwithbranchandcustomersandpayments/{accountnumber}")
 	@GetMapping
 	public @ResponseBody AccountPost getAccountWithBranchAndCustomers(@PathVariable("accountnumber") Long accountnumber) {
 		Account account = this.accountService.getAccountByAccountNumber(accountnumber);

@@ -9,13 +9,16 @@ import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -70,6 +73,19 @@ public class Account implements Serializable {
 	@JoinColumn(name="branchname")
 	private Branch branch;
 	
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "account_payment", joinColumns = { @JoinColumn(name = "accountid") }, inverseJoinColumns = { @JoinColumn(name = "paymentnumber") })
+	private Set<Payment> payments;
+	
+	public Set<Payment> getPayments() {
+		return payments;
+	}
+
+	public void setPayments(Set<Payment> payments) {
+		this.payments = payments;
+	}
+
 	@JsonIgnore
 	@ManyToMany(mappedBy = "accounts")
 	private Set<Customer> customers = new HashSet<>();

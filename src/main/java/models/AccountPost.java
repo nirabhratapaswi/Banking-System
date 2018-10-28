@@ -19,6 +19,15 @@ public class AccountPost {
 	private Integer customerid;
 	private Set<Customer> customers;
 	private Branch branch;
+	private Set<Payment> payments;
+
+	public Set<Payment> getPayments() {
+		return payments;
+	}
+
+	public void setPayments(Set<Payment> payments) {
+		this.payments = payments;
+	}
 
 	public Branch getBranch() {
 		return branch;

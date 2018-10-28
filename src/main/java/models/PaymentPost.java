@@ -8,7 +8,25 @@ public class PaymentPost {
 	// private LocalDateTime paymentdate;
 	private long loannumber;
 	private Loan loan;
+	private Account account;
+	private Long accountid;
 	
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}
+
+	public Long getAccountid() {
+		return accountid;
+	}
+
+	public void setAccountid(Long accountid) {
+		this.accountid = accountid;
+	}
+
 	public Loan getLoan() {
 		return loan;
 	}
@@ -50,7 +68,7 @@ public class PaymentPost {
 	}
 	
 	public String toCustomString() {
-		return "Payment number: " + ((Long) this.paymentnumber).toString() + ", amount: " + ((Long) this.paymentamount).toString() + ", loannumber: " + ((Long) this.loannumber).toString();
+		return "Payment number: " + ((Long) this.paymentnumber).toString() + ", amount: " + ((Long) this.paymentamount).toString() + ", loannumber: " + ((Long) this.loannumber).toString() + ", accountid: " + ((Long) this.accountid);
 	}
 		
 }

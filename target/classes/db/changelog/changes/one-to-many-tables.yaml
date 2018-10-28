@@ -158,3 +158,43 @@ databaseChangeLog:
             onUpdate: RESTRICT
             referencedColumnNames: customerid
             referencedTableName: customer
+            
+  - changeSet:
+      id: 100
+      author: nirabhratapaswi
+      changes:
+        - createTable:
+            tableName: account_payment
+            columns:
+              - column:
+                  name: accountid
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: paymentnumber
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: accountid
+            baseTableName: account_payment
+            constraintName: fk_accountid_account_payment
+            deferrable: true
+            initiallyDeferred: true
+            onDelete: CASCADE
+            onUpdate: RESTRICT
+            referencedColumnNames: accountid
+            referencedTableName: account
+        - addForeignKeyConstraint:
+            baseColumnNames: paymentnumber
+            baseTableName: account_payment
+            constraintName: fk_paymentnumber_account_payment
+            deferrable: true
+            initiallyDeferred: true
+            onDelete: CASCADE
+            onUpdate: RESTRICT
+            referencedColumnNames: paymentnumber
+            referencedTableName: payment

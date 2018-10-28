@@ -55,6 +55,7 @@ public class AccountService {
 		accountPost.setCustomers(account.getCustomers());
 		accountPost.setBranchname(account.getBranch().getBranchname());
 		accountPost.setIsa(account.getIsa());
+		accountPost.setPayments(account.getPayments());
 		return accountPost;
 	}
 }
